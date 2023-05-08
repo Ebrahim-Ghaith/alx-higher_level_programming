@@ -1,14 +1,28 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-# Get the Python script filename from the environment variable PYFILE
-filename=$PYFILE
+# Check if PYFILE environment variable is set
+if [ -z "$PYFILE" ]
+then
+  echo "PYFILE environment variable is not set"
+  exit 1
+fi
 
-# Append "c" to the filename to get the output filename
-output="${filename}c"
+# Add .py extension to PYFILE if not already present
+if [[ $PYFILE != *.py ]]
+then
+  PYFILE="$PYFILE.py"
+fi
 
-# Use the py_compile module to compile the script file
-python3 -m py_compile "$filename"
+# Set output filename
+PYCFILE="${PYFILE%.*}c"
 
-# Rename the compiled bytecode file to the output filename
-mv "${filename}c" "$output"
+# Compile the Python file and check for errors
+if python3 -m py_compile "$PYFILE"
+then
+  echo "Compiling $PYFILE ..."
+  mv "$PYCFILE" .
+else
+  echo "Error: Failed to compile $PYFILE"
+  exit 1
+fi
 
