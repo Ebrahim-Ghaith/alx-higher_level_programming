@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+# Get the Python script filename from the environment variable PYFILE
+filename=$PYFILE
+
+# Append "c" to the filename to get the output filename
+output="${filename}c"
+
+# Use the py_compile module to compile the script file
+python3 -m py_compile "$filename"
+
+# Rename the compiled bytecode file to the output filename
+mv "${filename}c" "$output"
+
