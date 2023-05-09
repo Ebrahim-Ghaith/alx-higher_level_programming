@@ -1,9 +1,10 @@
 #!/usr/bin/python3
-def uppercase(string):
-    for char in string:
-        if ord(char) >= 97 and ord(char) <= 122:
-            upper_char = chr(ord(char) - 32)
-            print("{:s}".format(upper_char), end='')
+def uppercase(s):
+    result = ""
+    for c in s:
+        if ord(c) >= 97 and ord(c) <= 122:
+            result += chr(ord(c) - 32)
         else:
-            print("{:s}".format(char), end='')
-    print()
+            result += c
+    print("{}\n".format(result), end="")
+
