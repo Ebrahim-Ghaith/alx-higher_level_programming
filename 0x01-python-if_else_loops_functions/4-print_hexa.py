@@ -2,5 +2,5 @@
 x = 0
 while x <= 98:
 
-    print("{} = {}".format(x , hex(x)))
+    print("{} = {}".format(x, hex(x)))
     x += 1
