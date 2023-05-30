@@ -1,25 +1,14 @@
 #!/usr/bin/python3
-
-
 class Square:
-    """
-    class square that has attributes:
-        size
-    some attributes are protected from input.
-    """
+    """Defines a square"""
     def __init__(self, size=0):
-        """
-        initialization function for our square clasee
-        """
+        """Initialises the data"""
+        self.__size = size
         if type(size) != int:
             raise TypeError("size must be an integer")
-        elif size < 0:
+        if size < 0:
             raise ValueError("size must be >= 0")
-        else:
-            self.__size = size
 
     def area(self):
-        """
-        calculates the area of the square
-        """
-        return self.__size ** 2
+        """Returns current square area"""
+        return self.__size**2
