@@ -1,12 +1,14 @@
 #!/usr/bin/python3
 
+
 def safe_print_list(my_list=[], x=0):
-    y = 0
+    i = 0
+    printed = 0
     for i in range(0, x):
-            try:
-                print('{}'.format(my_list[i]), end='')
-                y += 1
-            except ValueError as e:
-                continue
+        try:
+            print("{}".format(my_list[i]), end="")
+            printed += 1
+        except ValueError as e:
+            continue
     print()
-    return y
+    return printed
