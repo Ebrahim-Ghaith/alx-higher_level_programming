@@ -1,21 +1,26 @@
 #!/usr/bin/python3
-"""
-Lists all states with a name starting with N
-"""
+'''Prints all rows in the states table of a database with
+a name starting with 'N'.
+'''
 import sys
 import MySQLdb
 
+
 if __name__ == '__main__':
-    db = MySQLdb.connect(user=sys.argv[1], passwd=sys.argv[2],
-                         db=sys.argv[3], port=3306)
-
-    cur = db.cursor()
-    cur.execute("SELECT * \
-    FROM states \
-    WHERE CONVERT(`name` USING Latin1) \
-    COLLATE Latin1_General_CS \
-    LIKE 'N%';")
-    states = cur.fetchall()
-
-    for state in states:
-        print(state)
+    if len(sys.argv) >= 4:
+        db_connection = MySQLdb.connect(
+            host='localhost',
+            port=3306,
+            user=sys.argv[1],
+            passwd=sys.argv[2],
+            db=sys.argv[3]
+        )
+        cursor = db_connection.cursor()
+        cursor.execute(
+            'SELECT * FROM states WHERE name IS NOT NULL AND' +
+            ' LEFT(CAST(name AS BINARY), 1) = "N" ORDER BY states.id ASC;'
+        )
+        results = cursor.fetchall()
+        for result in results:
+            print(result)
+        db_connection.close()
