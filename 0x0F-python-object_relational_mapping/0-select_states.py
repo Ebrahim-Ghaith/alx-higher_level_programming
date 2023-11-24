@@ -1,24 +1,22 @@
 #!/usr/bin/python3
-"""
-class definition of a State and an instance Base
-"""
-
-from sqlalchemy import Column, Integer, String
-from sqlalchemy.ext.declarative import declarative_base
-
-Base = declarative_base()
+'''Prints all rows in the states table of a database.
+'''
+import sys
+import MySQLdb
 
 
-class State(Base):
-    """
-    State class:
-    inherits from Base
-    links to the MySQL table states
-    class attribute id that represents a column of an auto-generated,
-    unique integer, cant be null and is a primary key
-    class attribute name that represents a column of a string
-    with maximum 128 characters and cant be null
-    """
-    __tablename__ = 'states'
-    id = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
-    name = Column(String(128), nullable=False)
+if __name__ == '__main__':
+    if len(sys.argv) >= 4:
+        db_connection = MySQLdb.connect(
+            host='localhost',
+            port=3306,
+            user=sys.argv[1],
+            passwd=sys.argv[2],
+            db=sys.argv[3]
+        )
+        cursor = db_connection.cursor()
+        cursor.execute('SELECT * FROM states ORDER BY id ASC;')
+        results = cursor.fetchall()
+        for result in results:
+            print(result)
+        db_connection.close()
