@@ -1,18 +1,18 @@
 #!/usr/bin/python3
+"""A script that
+- takes in a URL
+- sends a request to the URL
+- displays the body of the response.
 """
-script to take in a URL input, sends a request to the URL, display response
-"""
+import sys
+import requests
 
 
-if __name__ == '__main__':
-    from sys import argv
-    import requests
+if __name__ == "__main__":
+    url = sys.argv[1]
 
-    try:
-        req = requests.get(argv[1])
-        if req:
-            print(req.content.decode('utf-8'))
-        elif req.status_code >= 400:
-            print("Error code: {}".format(req.status_code))
-    except KeyError:
-        pass
+    r = requests.get(url)
+    if r.status_code >= 400:
+        print("Error code: {}".format(r.status_code))
+    else:
+        print(r.text)
